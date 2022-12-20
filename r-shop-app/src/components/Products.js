@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Products = ({productsList}) => {
+const Products = ({productsList, addProductToSC}) => {
     return ( 
         <div>
             <h3>Products</h3>
@@ -11,7 +11,7 @@ const Products = ({productsList}) => {
                         return (
                             <Product key={index}> 
                                 {p.name}
-                                <Button> Add + </Button> 
+                                <Button onClick={()=> addProductToSC(p.id, p.name)}> Add + </Button> 
                             </Product>
                             
                         )

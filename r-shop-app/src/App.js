@@ -10,10 +10,31 @@ import productsList from './data/productsList';
 
 function App() {
   const [listCar,changeCar] = useState([
-    {id:1, quantity:1, name:"product 1"},
-    {id:2, quantity:3, name:"product 2"},
-    {id:3, quantity:2, name:"product 3"}
+    // {id:1, quantity:1, name:"product 1"},
+    // {id:2, quantity:3, name:"product 2"},
+    // {id:3, quantity:2, name:"product 3"}
 ]);
+
+  const addProductToSC = (id, name) => {
+    if (listCar.length === 0 ) {
+      changeCar([{id:id, name:name, quantity: 1}]);
+    } else {
+      const updateCar = [...listCar];
+      const  isProductInCar = updateCar.filter((p)=>{ return p.id === id }).length > 0;
+
+      if (isProductInCar) {
+        updateCar.forEach((p,i)=>{
+          if (p.id === id) {
+            let quantity = updateCar[i].quantity;
+            updateCar[i] = {id: id, name: name, quantity: quantity+1}
+          }
+        });
+      } else {
+        updateCar.push({id: id, name: name, quantity: 1});
+      }
+      changeCar(updateCar);
+    }
+  };
 
   return (
     <Container>
@@ -27,7 +48,9 @@ function App() {
           <Route path='*' element={ <NotFound/> }></Route>
           <Route path='/' element={ <Home/> }></Route>
           <Route path='/blog' element={ <Blog/> }></Route>
-          <Route path='/shop' element={  <Shop productsList={productsList} /> }></Route>
+          <Route path='/shop' element={  
+            <Shop productsList={productsList} addProductToSC={addProductToSC}/> 
+            }></Route>
         </Routes>
       </main>
       <aside>
