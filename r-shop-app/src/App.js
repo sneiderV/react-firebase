@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {NavLink, Route, Routes} from 'react-router-dom';
 import Home from './components/Home';
 import Blog from './components/Blog';
 import Shop from './components/Shop';
 import NotFound from './components/NotFound';
+import ShoppingCar from './components/ShoppingCar';
+import productsList from './data/productsList';
 
 function App() {
+  const [listCar,changeCar] = useState([
+    {id:1, quantity:1, name:"product 1"},
+    {id:2, quantity:3, name:"product 2"},
+    {id:3, quantity:2, name:"product 3"}
+]);
+
   return (
     <Container>
       <Menu>
@@ -19,11 +27,12 @@ function App() {
           <Route path='*' element={ <NotFound/> }></Route>
           <Route path='/' element={ <Home/> }></Route>
           <Route path='/blog' element={ <Blog/> }></Route>
-          <Route path='/shop' element={ <Shop/> }></Route>
+          <Route path='/shop' element={  <Shop productsList={productsList} /> }></Route>
         </Routes>
       </main>
       <aside>
         <h3>Sidebar</h3>
+        <ShoppingCar listCar={listCar}/>
       </aside>
     </Container>
   );

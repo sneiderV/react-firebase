@@ -1,10 +1,12 @@
 import React from 'react';
 
-const Shop = () => {
+import Products from "./Products"
+
+const Shop = ({productsList}) => {
     return ( 
         <div>
             <h1>Shop</h1>
-            <p>lorem</p>
+            <Products productsList={productsList}/>
         </div>
      );
 }
