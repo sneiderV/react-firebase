@@ -7,6 +7,9 @@ import Shop from './components/Shop';
 import NotFound from './components/NotFound';
 import ShoppingCar from './components/ShoppingCar';
 import productsList from './data/productsList';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers/shopReducer';
 
 function App() {
   const [listCar,changeCar] = useState([
@@ -36,28 +39,31 @@ function App() {
     }
   };
 
+  const store = createStore(reducer);
   return (
-    <Container>
-      <Menu>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/blog">Blog</NavLink>
-        <NavLink to="/shop">Shop</NavLink>
-      </Menu>
-      <main>
-        <Routes>
-          <Route path='*' element={ <NotFound/> }></Route>
-          <Route path='/' element={ <Home/> }></Route>
-          <Route path='/blog' element={ <Blog/> }></Route>
-          <Route path='/shop' element={  
-            <Shop productsList={productsList} addProductToSC={addProductToSC}/> 
-            }></Route>
-        </Routes>
-      </main>
-      <aside>
-        <h3>Sidebar</h3>
-        <ShoppingCar listCar={listCar}/>
-      </aside>
-    </Container>
+    <Provider store={store}>
+      <Container>
+        <Menu>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/blog">Blog</NavLink>
+          <NavLink to="/shop">Shop</NavLink>
+        </Menu>
+        <main>
+          <Routes>
+            <Route path='*' element={ <NotFound/> }></Route>
+            <Route path='/' element={ <Home/> }></Route>
+            <Route path='/blog' element={ <Blog/> }></Route>
+            <Route path='/shop' element={  
+              <Shop productsList={productsList} addProductToSC={addProductToSC}/> 
+              }></Route>
+          </Routes>
+        </main>
+        <aside>
+          <h3>Sidebar</h3>
+          <ShoppingCar listCar={listCar}/>
+        </aside>
+      </Container>
+    </Provider>
   );
 }
 
