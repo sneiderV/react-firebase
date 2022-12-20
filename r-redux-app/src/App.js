@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {NavLink, Route, Routes} from 'react-router-dom';
 import Home from './components/Home';
@@ -6,38 +6,11 @@ import Blog from './components/Blog';
 import Shop from './components/Shop';
 import NotFound from './components/NotFound';
 import ShoppingCar from './components/ShoppingCar';
-import productsList from './data/productsList';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducers/shopReducer';
 
 function App() {
-  const [listCar,changeCar] = useState([
-    // {id:1, quantity:1, name:"product 1"},
-    // {id:2, quantity:3, name:"product 2"},
-    // {id:3, quantity:2, name:"product 3"}
-]);
-
-  const addProductToSC = (id, name) => {
-    if (listCar.length === 0 ) {
-      changeCar([{id:id, name:name, quantity: 1}]);
-    } else {
-      const updateCar = [...listCar];
-      const  isProductInCar = updateCar.filter((p)=>{ return p.id === id }).length > 0;
-
-      if (isProductInCar) {
-        updateCar.forEach((p,i)=>{
-          if (p.id === id) {
-            let quantity = updateCar[i].quantity;
-            updateCar[i] = {id: id, name: name, quantity: quantity+1}
-          }
-        });
-      } else {
-        updateCar.push({id: id, name: name, quantity: 1});
-      }
-      changeCar(updateCar);
-    }
-  };
 
   const store = createStore(reducer);
   return (
@@ -53,14 +26,12 @@ function App() {
             <Route path='*' element={ <NotFound/> }></Route>
             <Route path='/' element={ <Home/> }></Route>
             <Route path='/blog' element={ <Blog/> }></Route>
-            <Route path='/shop' element={  
-              <Shop productsList={productsList} addProductToSC={addProductToSC}/> 
-              }></Route>
+            <Route path='/shop' element={ <Shop/> }></Route>
           </Routes>
         </main>
         <aside>
           <h3>Sidebar</h3>
-          <ShoppingCar listCar={listCar}/>
+          <ShoppingCar/>
         </aside>
       </Container>
     </Provider>

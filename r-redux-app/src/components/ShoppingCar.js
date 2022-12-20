@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const ShoppingCar = ({listCar}) => {
    
@@ -23,6 +24,13 @@ const ShoppingCar = ({listCar}) => {
         </div>
      );
 }
+const mapStateToProps = (globalState)=>{
+    console.log(globalState);
+    return {
+        listCar: globalState.listCar
+    }
+}
+
 const Product = styled.div`
     padding: 10px;
     border-bottom: 1px solid #ebebf3;
@@ -33,4 +41,4 @@ const NameProduct = styled.p`
     font-size: 16px;
     color: #000;
 `;
-export default ShoppingCar;
+export default connect(mapStateToProps)(ShoppingCar);

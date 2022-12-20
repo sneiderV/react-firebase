@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const Products = ({productsList, addProductToSC}) => {
     return ( 
@@ -58,5 +59,21 @@ const Button = styled.button`
     &:hover {
         background: #1c6ab9;
     }
-`;
-export default Products;
+`
+const mapStateToProps = (globalState)=>{
+    return {
+        productsList: globalState.products
+    }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        addProductToSC: (id,name)=>{ 
+            dispatch({
+                id: id,
+                name: name,
+                type:'ADD_PRODUCT'
+            });}
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

@@ -2,11 +2,11 @@ import React from 'react';
 
 import Products from "./Products"
 
-const Shop = ({productsList, addProductToSC}) => {
+const Shop = () => {
     return ( 
         <div>
             <h1>Shop</h1>
-            <Products productsList={productsList} addProductToSC={addProductToSC}/>
+            <Products/>
         </div>
      );
 }
