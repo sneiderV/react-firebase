@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Blog from './components/Blog';
@@ -7,13 +7,16 @@ import Header from './components/Header';
 import styled from 'styled-components';
 import Post from './components/Post';
 import NotFound404 from './components/NF404';
+import { ThemeCtx } from './contexts/themeContext';
 
 const App = () => {
+  const {theme} = useContext(ThemeCtx);
+
   return ( 
     <BrowserRouter>
       <PrincipalContainer>
         <Header/>
-        <Main>
+        <Main theme={theme}>
           <Routes>
             <Route path='/' element={ <Home/> } />
             <Route path='/blog' element={ <Blog/> } />
@@ -36,6 +39,8 @@ const PrincipalContainer = styled.div`
 `;
 
 const Main = styled.main`
+  font-size: ${props => props.theme ? props.theme.fontSize+'px' : '16px'};
+  text-align: ${props => props.theme ? props.theme.aling : 'center'};
   background: #fff;
   padding: 40px;
   border-radius: 10px;

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { NavLink } from 'react-router-dom';
 import posts from './../data/posts';
+import Controllers from './Controllers';
+// import { ThemeCtx } from '../contexts/themeContext';
 
 const Blog = () => {
-    console.log(posts);
+  // const props = useContext(ThemeCtx);
     return ( 
         <div>
             <h1>Blog</h1>
@@ -14,6 +16,7 @@ const Blog = () => {
                 })
               }
             </ul>
+            <Controllers/>
         </div>
      );
 }
