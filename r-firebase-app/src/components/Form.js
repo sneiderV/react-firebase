@@ -1,12 +1,28 @@
+import { addDoc, collection } from 'firebase/firestore';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import db from '../firebase/firebaseConfig';
 
 const Form = () => {
     const [name,changeName] = useState('');
     const [email,changeEmail] = useState('');
 
+    const onSubmit = async (e)=>{
+        e.preventDefault();
+        
+        try {
+            console.log('saving...');
+            const docRef = await addDoc(collection(db,'users'),{name:name, email:email});
+            console.log('saving :'+name+email+" Document written with ID: ", docRef.id);
+            changeName('');
+            changeEmail('');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return ( 
-        <form action=''>
+        <form action='' onSubmit={onSubmit}>
             <Input 
 				type="text"
 				name="name"
