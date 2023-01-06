@@ -15,7 +15,7 @@ const App = () => {
                     <ButtonsContainer>
                         <Button to="/categories">Categories</Button>
                         <Button to="/list">List expenses</Button>
-                        <Button>Log out</Button>
+                        <Button to="/">Log out</Button>
                     </ButtonsContainer>
                 </HeaderContainer>
             </Header>
