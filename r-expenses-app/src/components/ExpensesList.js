@@ -1,7 +1,20 @@
 import React from 'react';
+import Helmet from 'react-helmet';
+import BackButton from '../elements/BackButton';
+import { Header, Title } from '../elements/Header';
 
 const ExpensesList = () => {
-    return ( <h1>ExpensesList</h1> );
+    return ( 
+     <>
+        <Helmet>
+            <title>Expenses List</title>
+        </Helmet>
+        <Header>
+            <BackButton/>
+            <Title>Expenses List</Title>
+        </Header>
+    </>
+    );
 }
  
 export default ExpensesList;
