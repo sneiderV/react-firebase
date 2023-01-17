@@ -34,9 +34,9 @@ const Index = () => {
           <Container>
             <Routes>
               {/* TODO: Do private '/'*/}
-              <Route path='/' element={<App />}></Route> 
-              <Route path='/init' element={<InitSesion />}></Route>
               <Route path='/register' element={<UsersRegister />}></Route>
+              <Route path='/init' element={ <InitSesion /> }></Route>
+              <Route path='/' element={<PrivateRoute> <App/> </PrivateRoute>}></Route> 
               <Route path='/categories' element={ <PrivateRoute> <ExpensesByCategory/> </PrivateRoute>}></Route>
               <Route path='/list' element={<PrivateRoute> <ExpensesList/> </PrivateRoute>}></Route>
               <Route path='/edit:id' element={<PrivateRoute> <ExpensesEdit/> </PrivateRoute>}></Route>

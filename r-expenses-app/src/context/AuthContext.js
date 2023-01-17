@@ -13,7 +13,7 @@ const AuthProvider = ({children}) => {
     useEffect( () => {
         // check if there is user
         const cancelObserver = onAuthStateChanged(auth, (user)=>{
-            console.log(user);
+            console.log(user != null ? user : "Please longin !");
             changeUser(user);
             changeLoading(false);
         });
