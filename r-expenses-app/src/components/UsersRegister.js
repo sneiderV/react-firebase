@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { Header, Title, HeaderContainer} from './../elements/Header';
+import { Header, Title, HeaderContainer } from './../elements/Header';
 import Button from './../elements/Button';
 import { ButtonContainer, Form, Input, } from './../elements/ElementsForms'
 import { ReactComponent as RegisterSvg } from './../assets/images/registro.svg';
 import styled from 'styled-components';
+import { auth } from './../firebase/firebaseConfig';
+import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const Svg = styled(RegisterSvg)`
     width: 100%;
@@ -13,31 +17,93 @@ const Svg = styled(RegisterSvg)`
 `;
 
 const UsersRegister = () => {
-    return ( 
-    <>
-        <Helmet>
-            <title>User Register</title>
-        </Helmet>
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [verifyPass, setVerifyPass] = useState('');
 
-        <Header>
-            <HeaderContainer>
-                <Title>User Register</Title>
-                <div>
-                    <Button to="/init">Login</Button>
-                </div>
-            </HeaderContainer>
-        </Header>
-        <Form>
-            <Svg/>
-            <Input type='email' name='email' placeholder='Email'/>
-            <Input type='password' name='password' placeholder='Password'/>
-            <Input type='password' name='passwordConfir' placeholder='Confirm password'/>
-            <ButtonContainer>
-                <Button as='button' type='submit' primario>Create</Button>
-            </ButtonContainer>
-        </Form>
-    </>
+    const handleChange = (e) => {
+        switch (e.target.name) {
+            case 'email':
+                setEmail(e.target.value);
+                break;
+            case 'password':
+                setPassword(e.target.value);
+                break;
+            case 'verifyPass':
+                setVerifyPass(e.target.value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const expReg = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+        if (!expReg.test(email)) {
+            console.log("//todo");
+            return;
+        }
+        if (email === '' || password === '' || verifyPass === '') {
+            console.log("//todo");
+            return;
+        }
+        if (password !== verifyPass) {
+            console.log("//todo");
+            return;
+        }
+
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            let mensaje;
+			switch(error.code){
+				case 'auth/invalid-password':
+					mensaje = 'La contraseña tiene que ser de al menos 6 caracteres.'
+					break;
+				case 'auth/email-already-in-use':
+					mensaje = 'Ya existe una cuenta con el correo electrónico proporcionado.'
+				break;
+				case 'auth/invalid-email':
+					mensaje = 'El correo electrónico no es válido.'
+				break;
+				default:
+					mensaje = 'Hubo un error al intentar crear la cuenta.'
+				break;
+			}
+            console.log(mensaje);
+        }
+
+    }
+
+    return (
+        <>
+            <Helmet>
+                <title>User Register</title>
+            </Helmet>
+
+            <Header>
+                <HeaderContainer>
+                    <Title>User Register</Title>
+                    <div>
+                        <Button to="/init">Login</Button>
+                    </div>
+                </HeaderContainer>
+            </Header>
+            <Form onSubmit={handleSubmit}>
+                <Svg />
+                <Input type='email' name='email' placeholder='Email' value={email} onChange={handleChange} />
+                <Input type='password' name='password' placeholder='Password' value={password} onChange={handleChange} />
+                <Input type='password' name='verifyPass' placeholder='Confirm password' value={verifyPass} onChange={handleChange} />
+                <ButtonContainer>
+                    <Button as='button' type='submit' primario>Create</Button>
+                </ButtonContainer>
+            </Form>
+        </>
     );
 }
- 
+
 export default UsersRegister;
