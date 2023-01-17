@@ -17,7 +17,7 @@ const Svg = styled(LoginSvg)`
 `;
 const InitSesion = () => {
 
-    const navigate = useNavigate;
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [alertState, changeAlertState] = useState(false);
