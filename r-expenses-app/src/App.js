@@ -1,5 +1,6 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
+import BtnLogOut from './elements/BtnLogOut';
 import Button from './elements/Button';
 import { Header, Title, HeaderContainer, ButtonsContainer} from "./elements/Header";
 
@@ -15,7 +16,7 @@ const App = () => {
                     <ButtonsContainer>
                         <Button to="/categories">Categories</Button>
                         <Button to="/list">List expenses</Button>
-                        <Button to="/">Log out</Button>
+                        <BtnLogOut/>
                     </ButtonsContainer>
                 </HeaderContainer>
             </Header>

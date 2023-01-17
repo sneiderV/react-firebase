@@ -23,7 +23,7 @@ const UsersRegister = () => {
     const [password, setPassword] = useState('');
     const [verifyPass, setVerifyPass] = useState('');
     const [alertState, changeAlertState] = useState(false);
-    const [alertData, changeAlertData] = useState({})
+    const [alertData, changeAlertData] = useState({});
 
     const handleChange = (e) => {
         switch (e.target.name) {
