@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { auth } from './../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import Alert from '../elements/Alerts';
 
 
 const Svg = styled(RegisterSvg)`
@@ -21,6 +22,8 @@ const UsersRegister = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verifyPass, setVerifyPass] = useState('');
+    const [alertState, changeAlertState] = useState(false);
+    const [alertData, changeAlertData] = useState({})
 
     const handleChange = (e) => {
         switch (e.target.name) {
@@ -40,17 +43,23 @@ const UsersRegister = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        changeAlertState(false);
+        changeAlertData({});
+
         const expReg = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
         if (!expReg.test(email)) {
-            console.log("//todo");
+            changeAlertState(true)
+            changeAlertData({type: "error", message: "Use a valid email!"});
             return;
         }
         if (email === '' || password === '' || verifyPass === '') {
-            console.log("//todo");
+            changeAlertState(true)
+            changeAlertData({type: "error", message: "Fill all form please !"});
             return;
         }
         if (password !== verifyPass) {
-            console.log("//todo");
+            changeAlertState(true)
+            changeAlertData({type: "error", message: "Paswords are not the same !"});
             return;
         }
 
@@ -58,6 +67,7 @@ const UsersRegister = () => {
             await createUserWithEmailAndPassword(auth, email, password);
             navigate('/');
         } catch (error) {
+            changeAlertState(true)
             console.log(error);
             let mensaje;
 			switch(error.code){
@@ -74,7 +84,7 @@ const UsersRegister = () => {
 					mensaje = 'Hubo un error al intentar crear la cuenta.'
 				break;
 			}
-            console.log(mensaje);
+            changeAlertData({type: "error", message: mensaje});
         }
 
     }
@@ -102,6 +112,7 @@ const UsersRegister = () => {
                     <Button as='button' type='submit' primario>Create</Button>
                 </ButtonContainer>
             </Form>
+            <Alert type={alertData.type} message={alertData.message} alertState={alertState} changeAlertState={changeAlertState} />
         </>
     );
 }
