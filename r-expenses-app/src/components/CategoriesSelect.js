@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from '../assets/theme';
+import CategoryIcon from '../elements/CategoryIcon';
+
 import { ReactComponent as DownIcon } from './../assets/images/down.svg';
 
 const SelectContainer = styled.div`
@@ -78,13 +80,14 @@ const CategoriesSelect = ({category, changeCategory}) => {
     }
     return ( 
         <SelectContainer onClick={()=>{changeSelect(!showSelect)}}>
-            <SelectedOption>{category}</SelectedOption>
+            <SelectedOption>{category} <DownIcon/> </SelectedOption>
 
             {showSelect &&
                 <Options>
                     {categoriesList.map((cat) => {
                         return <Option key={cat.id} onClick={handleClick} data-value={cat.id}> 
-                                {cat.text} </Option>
+                                <CategoryIcon id={cat.id}/> {cat.text} 
+                                </Option>
                     })}
                 </Options>
             }
