@@ -50,7 +50,7 @@ const Input = styled.input`
     }
 `;
  
-const InputGrande = styled(Input)`
+const BigInput = styled(Input)`
     font-size: 4.37rem; /* 70px */
     font-weight: bold;
 `;
@@ -61,4 +61,4 @@ const ButtonContainer = styled.div`
     margin: 2.5rem 0;  /* 40px */
 `;
 
-export {FilterContainer, Form, Input, InputGrande, ButtonContainer};
+export {FilterContainer, Form, Input, BigInput, ButtonContainer};

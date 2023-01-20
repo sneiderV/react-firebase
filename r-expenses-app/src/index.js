@@ -33,7 +33,6 @@ const Index = () => {
         <BrowserRouter>
           <Container>
             <Routes>
-              {/* TODO: Do private '/'*/}
               <Route path='/register' element={<UsersRegister />}></Route>
               <Route path='/init' element={ <InitSesion /> }></Route>
               <Route path='/' element={<PrivateRoute> <App/> </PrivateRoute>}></Route> 
